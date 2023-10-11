@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper Cricket</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/x-icon" href="/images/player.png">
+</head>
+<body>
+    <h1 class="game-heading">Minesweeper Cricket</h1>
+    <table id="grid">
+        <tr><td>hello</td></tr>
+    </table>
+
+    <div class="top-left">
+        <span class="fielders-num">Number of Fielders:
+            <span id="num-fielders"></span>
+        </span>
+    </div>
+
+    <div class="left-container">
+        <button class="left-btn" onclick="openInstructions()"><div class="left-text">Instructions</div></button>
+        <button class="left-btn" onclick="openCustomize()"><div class="left-text">Customize</div></button>
+        <button class="left-btn" onclick="openLeaderboard()"><div class="left-text">Leaderboard</div></button>
+        <button class="left-btn" onclick="openSettings()"><div class="left-text">Settings</div></button>
+    </div>
+    <div class="right-container">
+        <div class="score">Runs <br><br>
+        <div id="current-score"></div>
+            <br><br><br>
+        </div>
+        <div class="fielders">Number of Balls left
+        <br><br>
+        <div class="current-score" id = "current-balls">11</div></div><br><br><br><br>
+        <button class="quit-btn" onclick="makeGrid();"><div class="left-text">New Game</div></button>
+        
+        <div class="instructions overlay" id="instructions">
+            <div class="container intro-box">
+            <a href="javascript:void(0)" id="closebtn" onclick=closeInstructions()>×</a>
+            <h2 class="overlay-heading">INSTRUCTIONS</h2><br>
+            <h3 class="overlay-subheading">SINGLE PLAYER</h3>
+            <p class="overlay-desc">You can either use our classic field or create your own custom one. <br>
+            Click on any square on the playing field to uncover it. Each click decreases the number of balls by one. If the square is empty, you score runs corresponding to the number on the square. However, if it contains a fielder ( <img src="images/player.png" alt="" class="power-pic"> ), the game ends and your score is final, even if you have more balls left.
+            To win, you must use up all the balls without uncovering a fielder. Winning adds 6 runs to your final score!!
+        </p>
+        <h4 class="overlay-subheading">POWER-UPS</h4>
+        <p class="overlay-desc power-text">To spice things up a bit, there are power-ups (red) randomly distributed on the field</p>
+        <p class="overlay-desc power-text">> Extra Life (<img src="images/heart.png" alt="" class="power-pic">) : You can continue the game even if you uncover a fielder! But remember, it works only once.</p>
+        <p class="overlay-desc power-text">> Minus Fielder (<img src="images/baseball-cap.png" alt="" class="power-pic">) : One fielder is randomly removed from the field!</p>
+        <p class="overlay-desc power-text">But wait! Not all "power-ups" are good! Watch out for the black ones, they could cost you dearly.</p>
+        <p class="overlay-desc power-text">> Minus Two (<img src="images/number.png" alt="" class="power-pic">) : Your score goes down by 2 runs</p>
+        <p class="overlay-desc power-text">> Plus Fielder (<img src="images/cap.png" alt="" class="power-pic">) : An extra fielder is randomly added to the field</p>
+
+        <p class="overlay-desc">Once you've finished the game, you can save your score to the leaderboard! Good luck!!</p><br><br>
+
+        <h3 class="overlay-subheading">TWO PLAYER - AGAINST</h3>
+        <p class="overlay-desc">You can either use our classic field or create your own custom one. <br>
+        In this mode, the players take turns setting the positions of fielders and power-ups on the field, and the other player uncovers squares. Whoever scores the highest wins!!
+        </p> <br>
+        <h3 class="overlay-subheading">TWO PLAYER - RACE</h3>
+        <p class="overlay-desc">You can either use our classic field or create your own custom one. <br>
+        In this mode, both the players take turns choosing squares on the same field. At the end (when both players have encountered fielders), whoever has the highest score wins!!
+        </p> <br><br>
+        </div>  
+
+        <div class="instructions overlay" id = "customize">
+            <div class="container custom-intro-box">
+                <a href="javascript:void(0)" id="closebtn" onclick=closeCustomize()>×</a>
+                <h2 class="customize-heading">CUSTOMIZE</h2><br><br>
+                <span class="mode-menu">
+                    <label for="modes"><h3 class="customize-subheading">MODE:</h3></label>
+                    <select name="modes" id="modes">
+                        <option value="sp" class="modes"><div class="drop-down-option">Single Player</div></option>
+                        <option value="tpa" class="modes"><div class="drop-down-option">Two Player- Against</div></option>
+                        <option value="tpr" class="modes"><div class="drop-down-option">Two Player- Race</option></div></option>
+                    </select>
+                </span>
+                <span class="size-menu">
+                    <br>
+                    <label for="quantity" class="size-subheading">Field Size (4 to 10):</label>
+                    <input type="number" id="quantity" class="quantity" name="quantity" min="4" max="10">
+                </span>
+                <span class="size-menu1">
+                    <br>
+                    <label for="quantity" class="fielders-subheading">Number of Fielders:</label>
+                    <input type="number" id="quantity1" class="quantity" name="quantity" min="0" max="30">
+                </span>
+                <span class="power-toggle">
+                    <br>
+                    <span class="power-subheading">Power-ups</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span class="button-classic">
+                    <button class="btn-classic" onclick="classicSave(); closeCustomize()">Go Classic</button>
+                </span>
+                <span class="button-custom">
+                    <button class="btn-custom" onclick="closeCustomize(); customSave();">Use Custom</button>
+                </span>
+            </div>
+        </div>
+    
+    <div class="lose overlay" id="lose">
+        <div class="container lose-intro-box">
+            <h1 class="overlay-heading-lose">
+                GAME OVER
+            </h1>
+            <br>
+            <span class="overlay-subheading" id = "white-txt">YOUR FINAL SCORE IS <span id="final-score" class="overlay-subheading"></span> RUNS</span>
+            <button class="finish-save" id ="savebtnlose" onclick="openSaveL()">SAVE TO LEADERBOARD</button>
+            <button class="finish-close" onclick="closeLose(); makeGrid()">CLOSE</button>
+        </div>
+    </div>
+
+    <div class="lose overlay" id="win">
+        <div class="container win-intro-box">
+            <h1 class="overlay-heading-lose">
+                YOU WIN!! <br>+6 runs
+            </h1>
+            <br>
+            <span class="overlay-subheading" id = "white-txt">YOUR FINAL SCORE IS <span id="final-score-win" class="overlay-subheading"></span> RUNS</span><br>
+            <button class="finish-save-win" id = "savebtnwin" onclick="openSaveL()">SAVE TO LEADERBOARD</button>
+            <button class="finish-close-win" onclick="closeWin(); makeGrid()">CLOSE</button>
+        </div>
+    </div>
+
+    <div id="leaderboard">
+        <div class="container leaderboard-intro-box">
+            <a href="javascript:void(0)" id="closebtn1" onclick=closeLeaderboard()>×</a>
+
+            <h2 class="leaderboard-heading">LEADERBOARD</h2>
+            <h3 class="small-white">*only for classic mode</h3>
+            <table class="leaderboard-table">
+                <tr>
+                    <th class="numheading">Rank</th>
+                    <th class="other">Name</th>
+                    <th class="other">Score</th>
+                </tr>
+                <tr>
+                    <td div="rank" id="num1">1</td>
+                    <td id="name1">player1</td>
+                    <td id="score1">100</td>
+                </tr>
+                <tr>
+                    <td div="rank" id="num2">2</td>
+                    <td id="name2">player2</td>
+                    <td id="score2">200</td>
+                </tr><tr>
+                    <td div="rank" id="num3">3</td>
+                    <td id="name3">player3</td>
+                    <td id="score3">300</td>
+                </tr><tr>
+                    <td div="rank" id="num4">4</td>
+                    <td id="name4">player4</td>
+                    <td id="score4">400</td>
+                </tr><tr>
+                    <td div="rank" id="num5">5</td>
+                    <td id="name5">player5</td>
+                    <td id="score5">500</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="settings-overlay" id="settings">
+        <div class="container settings-intro-box">
+            <h1 class="overlay-heading">Settings</h1>
+            <span class="settings1-toggle">
+                <br>
+                <span class="settings-subheading">Music</span>
+                <label class="switcho1">
+                    <input id="music-toggle" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </span>
+            <span class="settings2-toggle">
+                <br>
+                <span class="settings-subheading2">Sound Effects</span>
+                <label class="switcho2">
+                    <input id="sound-toggle" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </span>
+            <button class="cls-btn" onclick="closeSettings()">CANCEL</button>
+            <button class="save-btn" onclick="saveSettings(); closeSettings()">SAVE</button>
+        </div>
+    </div>
+
+    <div class="savel-overlay" id="savel">
+        <div class="container savel-intro-box">
+            <h1 class="overlay-heading">
+                SAVE TO LEADERBOARD
+            </h1>
+            <label for="name0" class="savel-heading">Enter your name: </label>
+            <input type="text" id="name0" class="savel-input" name="name0"><br><br>
+            <button class="cls-btn" onclick="closeSaveL()">CANCEL</button>
+            <button class="save-btn" onclick="saveSaveL()">SAVE</button>
+        </div>
+    </div>
+
+    <div id="life">
+        <div class="powerinfo">Extra Life</div>
+    </div>
+
+    <div id="minus">
+        <div class="powerinfo">Fielder Removed</div>
+    </div>
+
+    <div id="two">
+        <div class="powerinfo">Minus 2 runs</div>
+    </div>
+
+    <div id="plus">
+        <div class="powerinfo">Fielder Added</div>
+    </div>
+
+    <div id="lifeused">
+        <div class="powerinfo">Extra life used up</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
