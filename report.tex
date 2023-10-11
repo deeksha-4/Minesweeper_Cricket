@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[rightcaption]{sidecap}
+\usepackage{verbatim}
+\usepackage [ a4paper , hmargin =1.2 in , bottom =1.5 in ] { geometry }
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\begin{document}
+
+% preamble
+\title{CS104 Project Report \\ Minesweeper Cricket}
+\author{Deeksha Dhiwakar}
+\date{June 2023}
+\maketitle
+\tableofcontents
+\clearpage
+
+\pagestyle{fancy}
+\fancyhead[L]{Minesweeper Cricket}
+\fancyhead[R]{Deeksha Dhiwakar}
+
+\section{Project Description}
+I have created a game that is a simple combination of the two classic games, minesweeper and cricket. I have used HTML and CSS to create a responsive and interactive user interface, and incorporated dynamic functionality using JavaScript. \\
+The ultimate goal of the game is to maximize the player's score (number of runs). The player scores runs by uncovering cells on the grid of the playing field. The field also contains fielders, randomly distributed and hidden. If the player clicks on a cell containing a fielder, the game is terminated and the score thus far is final. To 'win', the player must uncover all cells except those containing fielders.
+
+\section{Implementation}
+A brief summary of the game logic is as follows:
+\subsection{Game Setup}
+When the server is launched, a function is called to generate the grid, based on the values of field size and number of fielders. Depending on the field size, the function also decides the number of cells containing power-ups and 1, 2 and 3 runs. Three successive functions are then called, which distribute fielders and power-ups and then assign run values to the remaining cells. The logic behind the distribution is to maintain an array of all possible unoccupied cell coordinates, shuffle it using random function implementation and pop off coordinates when we wish to add a fielder/ power-up/ run. \\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/setup.png}
+    \caption{Field on Startup}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Playing}
+When the player clicks on a cell, the code first checks if the cell contains a fielder or not. If it does, the game ends (assuming the player does not have an extra life, if they do the game goes on) and all the fielders' positions are revealed, and the final score is displayed. If the cell does not contain a fielder, a function is called to check if the cell contains a power-up. If it does, appropriate variables are updated and the power-up's image is displayed. If it doesn't, the function checks for the number of runs the cell holds. The value is displayed and the current score is updated.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/played.png}
+    \caption{Field while Playing}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Instructions}
+When the player clicks on this button, the game rules are displayed.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/instructions.png}
+    \caption{Instructions}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Customize}
+By clicking on this button, the player has the option to set custom field size and number of fielders, or to use the custom field. JavaScript variables store these values and regenerate the grid with the updated parameters.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/customize.png}
+    \caption{Customize}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Leaderboard}
+Once a player has finished playing on the classic field, they have the option to save their score to the leaderboard. If their score is among the top five scores, it is added to the leaderboard. I have implemented this by maintaining an array of objects, each object containing the player's name and score. If the player chooses to save their score, their name is taken as input and added to the map along with their score. Then a separate function is called to set the leaderboard. It sorts the map in descending order of players' scores and then populates the leaderboard with the top five scorers.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/leaderboard.png}
+    \caption{Leaderboard}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Settings}
+By clicking on this button, the player can choose to enable/ disable background music and sound effects.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/settings.png}
+    \caption{Settings}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Customization}
+Some of the custom features I have added to the game are
+\begin{itemize}
+    \item \textbf{Custom field size:} Players have the option to set the size of the grid.
+    \item \textbf{Custom number of fielders:} Players can also choose the number of fielders to play against.
+    \item \textbf{Classic mode:} Instead of setting the grid size and number of fielders themselves, players can simply choose Classic mode to play on a 7 by 7 grid with 11 fielders.
+    \item \textbf{Leaderboard:} Players have the option to save their scores in classic mode to a leaderboard, which displays the top five scores across games.
+    \item \textbf{Random runs:} The cells contain different number of runs (1, 2 or 3).
+    \item \textbf{Background music and Sound effects:} I have added background music to the game as well as different sound effects for each of the power-ups, runs, winning and losing.
+    \item \textbf{Power-ups and Power-downs:} I have added two power-ups and two power-downs that are randomly distributed in the field along with the runs and fielders. The power-ups are Extra Life and Removing a Fielder and the power-downs are Minus 2 Runs and Adding a Fielder.
+    \item \textbf{New Game Option:} At any point of time, the player can start a new game by simply clicking the New Game button at the bottom right corner. The custom settings are also retained.
+    \item \textbf{Winning:} The player 'wins' when they have uncovered all cells except those containing fielders. Winning adds 6 runs to the player's final score.
+    \item \textbf{Settings Menu:} Users have the option to enable or disable background music and sound effects.
+    
+\end{itemize}
+
+\section{Purpose of each File/ Folder}
+\begin{itemize}
+    \item \textbf{game.html:} Contains the HTML code for the game.
+    \item \textbf{style.css:} Contains the CSS that styles the HTML elements.
+    \item \textbf{script.js:} Contains the JavaScript code that implements the game functionality.
+    \item \textbf{fonts:} Contains the custom fonts I have downloaded from the internet \cite{font-link}.
+    \item \textbf{images:} Contains all the images I have used in the game, downloaded from the internet \cite{images-link}.
+    \item \textbf{sound:} Contains all the sounds I have used in the game, downloaded from the internet \cite{sounds-link}.
+\end{itemize}
+
+\section{Modifications to Reference Code}
+I created the grid and implemented the basic JavaScript functionality using the code from \cite{codebase}.\\
+I used \cite{w3} as reference for advanced HTML and CSS elements (like transitions, \cite{trans}) and also for some specific JavaScript functions.\\
+To implement the leaderboard functionality, I referred to \cite{lead-link}. \\
+I downloaded custom fonts from \cite{font-link}, images from \cite{images-link} and sounds from \cite{sounds-link}.
+
+\section{Compiling the Code}
+The game requires no compilation. The player simply has to double click on \textit{game.html} to begin playing the game.
+\\
+In order to generate \textit{report.pdf} from \textit{report.tex} and \textit{report.bib}, run the following commands sequentially on Terminal:
+\\
+\texttt{pdflatex report} \\
+\texttt{bibtex report} \\
+\texttt{pdflatex report} \\
+\texttt{pdflatex report}
+
+% Bibliography
+\bibliographystyle{IEEEtran}
+\bibliography{report}
+
+\end{document}
